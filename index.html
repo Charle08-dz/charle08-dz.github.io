@@ -238,11 +238,13 @@
       gap: 20px;
     }
     .project-card {
+      position: relative;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 28px;
       transition: transform 0.2s, border-color 0.2s;
+      cursor: pointer;
     }
     .project-card:hover {
       transform: translateY(-4px);
@@ -260,6 +262,8 @@
     .project-card h4 { margin-bottom: 10px; }
     .project-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
     .project-card .link { color: var(--accent); font-size: 14px; font-weight: 600; }
+    /* 拉伸链接:点击卡片任意位置都跳转详情页 */
+    .project-card .link::after { content: ""; position: absolute; inset: 0; }
 
     /* ===== 联系 ===== */
     .contact-card {
@@ -484,19 +488,19 @@
           <span class="tag">项目一</span>
           <h4>项目名称</h4>
           <p>这里是项目的简短介绍，描述它解决了什么问题、用到了什么技术。</p>
-          <a class="link" href="#">查看详情 →</a>
+          <a class="link" href="projects/project-1.html">查看详情 →</a>
         </div>
         <div class="project-card">
           <span class="tag">项目二</span>
           <h4>项目名称</h4>
           <p>这里是项目的简短介绍，描述它解决了什么问题、用到了什么技术。</p>
-          <a class="link" href="#">查看详情 →</a>
+          <a class="link" href="projects/project-2.html">查看详情 →</a>
         </div>
         <div class="project-card">
           <span class="tag">项目三</span>
           <h4>项目名称</h4>
           <p>这里是项目的简短介绍，描述它解决了什么问题、用到了什么技术。</p>
-          <a class="link" href="#">查看详情 →</a>
+          <a class="link" href="projects/project-3.html">查看详情 →</a>
         </div>
       </div>
     </div>
