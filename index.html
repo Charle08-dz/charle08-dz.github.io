@@ -315,38 +315,23 @@
     }
     .info-list li span:first-child { color: var(--text-muted); }
 
-    /* ===== 技能 ===== */
-    .skills-grid {
+    /* ===== 爱好 ===== */
+    .hobbies-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
     }
-    .skill-card {
+    .hobby-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 26px;
       transition: transform 0.2s, border-color 0.2s;
     }
-    .skill-card:hover { transform: translateY(-4px); border-color: var(--accent); }
-    .skill-card .icon { font-size: 28px; margin-bottom: 14px; }
-    .skill-card h4 { margin-bottom: 8px; }
-    .skill-card p { color: var(--text-muted); font-size: 14px; }
-    .bar {
-      margin-top: 16px;
-      height: 6px;
-      background: var(--bg-soft);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .bar span {
-      display: block;
-      height: 100%;
-      width: 0;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      transition: width 1s ease;
-    }
+    .hobby-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .hobby-card .icon { font-size: 28px; margin-bottom: 14px; }
+    .hobby-card h4 { margin-bottom: 8px; }
+    .hobby-card p { color: var(--text-muted); font-size: 14px; }
 
     /* ===== 项目 ===== */
     .projects-grid {
@@ -470,7 +455,6 @@
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition: none !important; }
       .reveal { opacity: 1; transform: none; }
-      .bar span { transition: none; }
     }
   </style>
 </head>
@@ -495,7 +479,7 @@
     <nav class="side-nav" aria-label="主导航">
       <a href="#home" data-spy="home" data-num="01"><span class="ico">🏠</span>首页</a>
       <a href="#about" data-spy="about" data-num="02"><span class="ico">🙋</span>关于</a>
-      <a href="#skills" data-spy="skills" data-num="03"><span class="ico">🛠️</span>技能</a>
+      <a href="#hobbies" data-spy="hobbies" data-num="03"><span class="ico">🎈</span>爱好</a>
       <a href="#projects" data-spy="projects" data-num="04"><span class="ico">📁</span>项目</a>
       <a href="#contact" data-spy="contact" data-num="05"><span class="ico">✉️</span>联系</a>
     </nav>
@@ -548,35 +532,36 @@
       </div>
     </section>
 
-    <!-- 技能 -->
-    <section id="skills">
+    <!-- 爱好 -->
+    <section id="hobbies">
       <div class="container">
-        <h2 class="section-title">我的技能</h2>
-        <p class="section-sub">我擅长的一些领域</p>
-        <div class="skills-grid">
-          <div class="skill-card">
-            <div class="icon">🌐</div>
-            <h4>前端开发</h4>
-            <p>HTML / CSS / JavaScript / React</p>
-            <div class="bar"><span data-width="90%"></span></div>
+        <h2 class="section-title">个人爱好</h2>
+        <p class="section-sub">课堂之外，我喜欢做的事</p>
+        <div class="hobbies-grid">
+          <div class="hobby-card">
+            <div class="icon">💻</div>
+            <h4>编程技术</h4>
+            <p>喜欢自学新技术、折腾小项目，享受把想法变成现实的过程。</p>
           </div>
-          <div class="skill-card">
-            <div class="icon">⚙️</div>
-            <h4>后端开发</h4>
-            <p>Node.js / Python / 数据库</p>
-            <div class="bar"><span data-width="80%"></span></div>
+          <div class="hobby-card">
+            <div class="icon">🎬</div>
+            <h4>视频制作</h4>
+            <p>剪辑、特效、配乐都爱玩，做过不少有意思的短片。</p>
           </div>
-          <div class="skill-card">
-            <div class="icon">🎨</div>
-            <h4>UI 设计</h4>
-            <p>Figma / 用户体验 / 原型设计</p>
-            <div class="bar"><span data-width="75%"></span></div>
+          <div class="hobby-card">
+            <div class="icon">🎮</div>
+            <h4>动漫 / 游戏</h4>
+            <p>火影老粉，也爱在游戏里放松和找灵感。</p>
           </div>
-          <div class="skill-card">
-            <div class="icon">📱</div>
-            <h4>移动开发</h4>
-            <p>响应式设计 / 小程序 / 跨平台</p>
-            <div class="bar"><span data-width="70%"></span></div>
+          <div class="hobby-card">
+            <div class="icon">🏀</div>
+            <h4>运动健身</h4>
+            <p>保持规律运动，状态好了学习和折腾都更有劲。</p>
+          </div>
+          <div class="hobby-card">
+            <div class="icon">✈️</div>
+            <h4>旅游</h4>
+            <p>喜欢去没去过的地方走走，感受不同的城市和风景。</p>
           </div>
         </div>
       </div>
@@ -664,24 +649,8 @@
         })();
       }
 
-      // 技能条动画：滚动到可见时展开（无 IntersectionObserver 或减少动效时直接显示）
-      const bars = document.querySelectorAll('.bar span');
-      if (!('IntersectionObserver' in window) || reduceMotion) {
-        bars.forEach(bar => { bar.style.width = bar.dataset.width; });
-      } else {
-        const barObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.style.width = entry.target.dataset.width;
-              barObserver.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.4 });
-        bars.forEach(bar => barObserver.observe(bar));
-      }
-
       // 滚动入场动画（渐进增强：无 JS 或减少动效时内容保持可见）
-      const revealEls = document.querySelectorAll('.skill-card, .project-card, .about-card, .contact-card');
+      const revealEls = document.querySelectorAll('.hobby-card, .project-card, .about-card, .contact-card');
       if ('IntersectionObserver' in window && !reduceMotion) {
         revealEls.forEach(el => el.classList.add('reveal'));
         const revealObserver = new IntersectionObserver((entries) => {
