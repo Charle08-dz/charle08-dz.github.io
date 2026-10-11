@@ -322,16 +322,21 @@
       gap: 20px;
     }
     .hobby-card {
+      position: relative;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 26px;
       transition: transform 0.2s, border-color 0.2s;
+      cursor: pointer;
     }
     .hobby-card:hover { transform: translateY(-4px); border-color: var(--accent); }
     .hobby-card .icon { font-size: 28px; margin-bottom: 14px; }
     .hobby-card h4 { margin-bottom: 8px; }
-    .hobby-card p { color: var(--text-muted); font-size: 14px; }
+    .hobby-card p { color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
+    .hobby-card .link { color: var(--accent); font-size: 14px; font-weight: 600; }
+    /* 拉伸链接:点击卡片任意位置都跳转爱好详情页 */
+    .hobby-card .link::after { content: ""; position: absolute; inset: 0; }
 
     /* ===== 身份 ===== */
     .identity-grid {
@@ -561,26 +566,31 @@
             <div class="icon">💻</div>
             <h4>编程技术</h4>
             <p>喜欢自学新技术、折腾小项目，享受把想法变成现实的过程。</p>
+            <a class="link" href="hobbies/hobby-1.html">查看详情 →</a>
           </div>
           <div class="hobby-card">
             <div class="icon">🎬</div>
             <h4>视频制作</h4>
             <p>剪辑、特效、配乐都爱玩，做过不少有意思的短片。</p>
+            <a class="link" href="hobbies/hobby-2.html">查看详情 →</a>
           </div>
           <div class="hobby-card">
             <div class="icon">🎮</div>
             <h4>动漫 / 游戏</h4>
             <p>火影老粉，也爱在游戏里放松和找灵感。</p>
+            <a class="link" href="hobbies/hobby-3.html">查看详情 →</a>
           </div>
           <div class="hobby-card">
             <div class="icon">🏀</div>
             <h4>运动健身</h4>
             <p>保持规律运动，状态好了学习和折腾都更有劲。</p>
+            <a class="link" href="hobbies/hobby-4.html">查看详情 →</a>
           </div>
           <div class="hobby-card">
             <div class="icon">✈️</div>
             <h4>旅游</h4>
             <p>喜欢去没去过的地方走走，感受不同的城市和风景。</p>
+            <a class="link" href="hobbies/hobby-5.html">查看详情 →</a>
           </div>
         </div>
       </div>
