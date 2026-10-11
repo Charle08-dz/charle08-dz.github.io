@@ -219,6 +219,7 @@ header {
   object-fit: cover;
   border-radius: var(--radius);
 }
+.spot-panel img + img { margin-top: 12px; }
 .spot-empty {
   padding: 36px 0;
   text-align: center;

@@ -69,7 +69,15 @@
   <script>
   (function () {
     var VISITED = ['浙江省', '河南省', '新疆维吾尔自治区', '甘肃省', '陕西省', '宁夏回族自治区', '青海省', '西藏自治区', '云南省', '四川省', '重庆市', '湖北省', '安徽省', '江苏省', '上海市', '广东省', '北京市'];
-    var TRAVEL_PHOTOS = {};
+    var TRAVEL_PHOTOS = {
+      '浙江': ['../assets/media/travel/zhejiang-1.jpg'],
+      '云南': ['../assets/media/travel/yunnan-1.jpg'],
+      '湖北': ['../assets/media/travel/hubei-1.jpg'],
+      '四川': ['../assets/media/travel/sichuan-1.jpg', '../assets/media/travel/sichuan-2.jpg'],
+      '上海': ['../assets/media/travel/shanghai-1.jpg'],
+      '西藏': ['../assets/media/travel/xizang-1.jpg'],
+      '江苏': ['../assets/media/travel/jiangsu-1.jpg']
+    };
 
     var shortName = function (n) {
       return n.replace(/(维吾尔自治区|壮族自治区|回族自治区|特别行政区|自治区|省|市)$/, '');
@@ -113,10 +121,13 @@
       } else if (TRAVEL_PHOTOS[sn]) {
         spotName.textContent = sn;
         spotBody.innerHTML = '';
-        var img = document.createElement('img');
-        img.src = TRAVEL_PHOTOS[sn];
-        img.alt = sn + ' 的旅行照片';
-        spotBody.appendChild(img);
+        TRAVEL_PHOTOS[sn].forEach(function (src, idx) {
+          var img = document.createElement('img');
+          img.src = src;
+          img.alt = sn + ' 的旅行照片 ' + (idx + 1);
+          img.loading = 'lazy';
+          spotBody.appendChild(img);
+        });
       } else {
         spotName.textContent = sn;
         spotBody.innerHTML = '<div class="spot-empty">📷 哎呀,本人好像不太爱拍照</div>';
