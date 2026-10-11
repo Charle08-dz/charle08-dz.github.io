@@ -181,8 +181,8 @@ header {
 }
 #china-map .province {
   fill: #ffffff;
-  stroke: #b9c4d6;
-  stroke-width: 1;
+  stroke: #9aa8bf;
+  stroke-width: 1.8;
   cursor: pointer;
   transform-box: fill-box;
   transform-origin: center;
@@ -200,8 +200,8 @@ header {
 }
 #china-map .map-border {
   fill: none;
-  stroke: #b9c4d6;
-  stroke-width: 1;
+  stroke: #9aa8bf;
+  stroke-width: 1.8;
   stroke-dasharray: 4 3;
 }
 .spot-panel {
