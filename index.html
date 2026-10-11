@@ -97,6 +97,7 @@
     .side-avatar {
       width: 88px;
       height: 88px;
+      flex-shrink: 0;
       border-radius: 50%;
       margin: 0 auto 18px;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
@@ -108,6 +109,13 @@
       color: #fff;
       box-shadow: 0 8px 30px rgba(79, 124, 255, 0.35);
       animation: pulse 3s ease-in-out infinite;
+      overflow: hidden;
+    }
+    .side-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 18%;
     }
     @keyframes pulse {
       0%, 100% { box-shadow: 0 8px 30px rgba(79, 124, 255, 0.35); }
@@ -496,7 +504,7 @@
 
   <!-- 左侧边栏 -->
   <aside class="sidebar" id="sidebar">
-    <div class="side-avatar">查</div>
+    <div class="side-avatar"><img src="assets/media/hero-photo.jpg" alt="查徐皓照片"></div>
     <div class="side-name">查徐皓</div>
     <div class="side-role">杭电 · 大一 · 热爱技术</div>
     <nav class="side-nav" aria-label="主导航">

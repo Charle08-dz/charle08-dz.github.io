@@ -114,6 +114,50 @@ header {
   font-size: 15px;
 }
 
+/* 真实图片封面 */
+.cover.has-img {
+  display: block;
+  overflow: hidden;
+  min-height: 0;
+  background: var(--bg-soft);
+}
+.cover.has-img img {
+  display: block;
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+/* 动漫海报墙 */
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin: 36px 0;
+}
+.poster-grid figure { margin: 0; }
+.poster-grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 50% 25%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(43, 50, 69, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.poster-grid figure:hover img {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(79, 124, 255, 0.22);
+}
+.poster-grid figcaption {
+  margin-top: 8px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
 /* 作品视频 */
 .cover-video { margin: 36px 0; }
 .cover-video video {
