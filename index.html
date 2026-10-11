@@ -40,6 +40,45 @@
 
     a { color: inherit; text-decoration: none; }
 
+    ::selection { background: rgba(245, 197, 66, 0.3); color: #fff; }
+
+    /* 淡金色网格底纹 */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(245, 197, 66, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 197, 66, 0.04) 1px, transparent 1px);
+      background-size: 42px 42px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* 顶部滚动进度条 */
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 10px rgba(245, 197, 66, 0.6);
+      z-index: 200;
+    }
+
+    /* 终端闪烁光标 */
+    .cursor {
+      display: inline-block;
+      width: 0.55em;
+      height: 1em;
+      margin-left: 6px;
+      background: var(--accent);
+      vertical-align: -2px;
+      animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
     /* ===== 左侧边栏 ===== */
     .sidebar {
       position: fixed;
@@ -68,6 +107,11 @@
       font-weight: 700;
       color: #fff;
       box-shadow: 0 8px 30px rgba(245, 197, 66, 0.35);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 8px 30px rgba(245, 197, 66, 0.35); }
+      50% { box-shadow: 0 8px 44px rgba(245, 197, 66, 0.6); }
     }
     .side-name {
       text-align: center;
@@ -96,6 +140,14 @@
       transition: color 0.2s, background 0.2s;
     }
     .side-nav a .ico { width: 22px; text-align: center; }
+    .side-nav a::after {
+      content: attr(data-num);
+      margin-left: auto;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      opacity: 0.55;
+    }
     .side-nav a:hover { color: var(--text); background: rgba(245, 197, 66, 0.08); }
     .side-nav a.active {
       color: var(--text);
@@ -234,6 +286,11 @@
 
     /* ===== 通用区块标题 ===== */
     .section-title { font-size: 30px; font-weight: 700; margin-bottom: 8px; }
+    .section-title::before {
+      content: "# ";
+      color: var(--accent);
+      font-family: Consolas, "Courier New", monospace;
+    }
     .section-sub { color: var(--text-muted); margin-bottom: 40px; }
 
     /* ===== 关于 ===== */
@@ -305,7 +362,19 @@
       padding: 26px;
       transition: transform 0.2s, border-color 0.2s;
       cursor: pointer;
+      overflow: hidden;
     }
+    /* 悬停时的金色流光 */
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 40%, rgba(245, 197, 66, 0.1) 50%, transparent 60%);
+      transform: translateX(-100%);
+      transition: transform 0.7s ease;
+      pointer-events: none;
+    }
+    .project-card:hover::before { transform: translateX(100%); }
     .project-card:hover { transform: translateY(-4px); border-color: var(--accent); }
     .project-card .tag {
       display: inline-block;
@@ -351,7 +420,9 @@
       text-align: center;
       color: var(--text-muted);
       font-size: 14px;
+      font-family: Consolas, "Courier New", monospace;
     }
+    footer .dollar { color: var(--accent); }
 
     /* ===== 轻提示 Toast ===== */
     .toast {
@@ -405,6 +476,8 @@
 </head>
 <body>
 
+  <div class="progress" id="progress"></div>
+
   <!-- 移动端顶栏 -->
   <div class="mobile-bar">
     <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false" aria-controls="sidebar">
@@ -420,11 +493,11 @@
     <div class="side-name">查徐皓</div>
     <div class="side-role">杭电 · 大一 · 热爱技术</div>
     <nav class="side-nav" aria-label="主导航">
-      <a href="#home" data-spy="home"><span class="ico">🏠</span>首页</a>
-      <a href="#about" data-spy="about"><span class="ico">🙋</span>关于</a>
-      <a href="#skills" data-spy="skills"><span class="ico">🛠️</span>技能</a>
-      <a href="#projects" data-spy="projects"><span class="ico">📁</span>项目</a>
-      <a href="#contact" data-spy="contact"><span class="ico">✉️</span>联系</a>
+      <a href="#home" data-spy="home" data-num="01"><span class="ico">🏠</span>首页</a>
+      <a href="#about" data-spy="about" data-num="02"><span class="ico">🙋</span>关于</a>
+      <a href="#skills" data-spy="skills" data-num="03"><span class="ico">🛠️</span>技能</a>
+      <a href="#projects" data-spy="projects" data-num="04"><span class="ico">📁</span>项目</a>
+      <a href="#contact" data-spy="contact" data-num="05"><span class="ico">✉️</span>联系</a>
     </nav>
     <div class="side-socials">
       <a href="https://github.com/charle08-dz" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">🐙</a>
@@ -440,8 +513,8 @@
     <!-- 首页 -->
     <section class="hero" id="home">
       <div class="container">
-        <h1>你好，我是 <span class="highlight">查徐皓</span></h1>
-        <p>杭州电子科技大学的大一新生，喜欢钻研技术，正在探索属于自己的方向。</p>
+        <h1>你好，我是 <span class="highlight">查徐皓</span><span class="cursor" aria-hidden="true"></span></h1>
+        <p id="typed" data-text="杭州电子科技大学的大一新生，喜欢钻研技术，正在探索属于自己的方向。">杭州电子科技大学的大一新生，喜欢钻研技术，正在探索属于自己的方向。</p>
         <div>
           <a href="#projects" class="btn btn-primary">查看我的作品</a>
           <a href="#contact" class="btn btn-ghost">联系我</a>
@@ -555,7 +628,7 @@
     </section>
 
     <footer>
-      <div class="container">© 2026 查徐皓 · 保留所有权利</div>
+      <div class="container"><span class="dollar">$</span> echo "© 2026 查徐皓 · 保留所有权利"<span class="cursor" aria-hidden="true"></span></div>
     </footer>
 
   </div>
@@ -565,6 +638,31 @@
   <script>
     (function () {
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // 顶部滚动进度条
+      const progress = document.getElementById('progress');
+      function onProgress() {
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - innerHeight;
+        progress.style.width = (max > 0 ? scrollY / max * 100 : 0) + '%';
+      }
+      window.addEventListener('scroll', onProgress, { passive: true });
+      window.addEventListener('resize', onProgress);
+      onProgress();
+
+      // Hero 打字机效果(减少动效时直接显示全文)
+      const typed = document.getElementById('typed');
+      if (typed && !reduceMotion) {
+        const full = typed.dataset.text;
+        typed.textContent = '';
+        let i = 0;
+        (function type() {
+          if (i <= full.length) {
+            typed.textContent = full.slice(0, i++);
+            setTimeout(type, 40);
+          }
+        })();
+      }
 
       // 技能条动画：滚动到可见时展开（无 IntersectionObserver 或减少动效时直接显示）
       const bars = document.querySelectorAll('.bar span');
