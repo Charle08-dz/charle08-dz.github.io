@@ -1,13 +1,13 @@
 /* 项目详情页共享样式 */
 :root {
-  --bg: #0f1117;
-  --bg-soft: #171a23;
-  --card: #1c2029;
-  --text: #e6e8ee;
-  --text-muted: #9aa1b0;
-  --accent: #6c8cff;
-  --accent-2: #9a6cff;
-  --border: #2a2f3a;
+  --bg: #0a0a0c;
+  --bg-soft: #101014;
+  --card: #16161b;
+  --text: #ece9e2;
+  --text-muted: #98938a;
+  --accent: #f5c542;
+  --accent-2: #d98f1e;
+  --border: #2b2a26;
   --radius: 14px;
   --header-h: 64px;
 }
@@ -33,7 +33,7 @@ header {
   top: 0;
   z-index: 100;
   backdrop-filter: blur(12px);
-  background: rgba(15, 17, 23, 0.8);
+  background: rgba(10, 10, 12, 0.8);
   border-bottom: 1px solid var(--border);
 }
 .nav {
@@ -74,7 +74,7 @@ header {
   font-size: 12px;
   padding: 3px 10px;
   border-radius: 999px;
-  background: rgba(108, 140, 255, 0.15);
+  background: rgba(245, 197, 66, 0.15);
   color: var(--accent);
   margin-bottom: 14px;
 }
@@ -90,7 +90,7 @@ header {
   margin: 36px 0;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  background: linear-gradient(135deg, rgba(108, 140, 255, 0.18), rgba(154, 108, 255, 0.18));
+  background: linear-gradient(135deg, rgba(245, 197, 66, 0.18), rgba(217, 143, 30, 0.18));
   min-height: 280px;
   display: flex;
   align-items: center;
