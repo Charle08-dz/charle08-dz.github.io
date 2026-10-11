@@ -163,6 +163,75 @@ header {
   object-position: 50% 50%;
 }
 
+/* 中国地图(旅游页) */
+.china-map-wrap { margin: 36px 0; }
+.map-tip {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+#china-map {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+#china-map .province {
+  fill: #ffffff;
+  stroke: #b9c4d6;
+  stroke-width: 1;
+  cursor: pointer;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.2s ease, filter 0.2s ease, fill 0.2s ease;
+}
+#china-map .province:hover {
+  transform: scale(1.06);
+  filter: drop-shadow(0 4px 10px rgba(43, 50, 69, 0.3));
+}
+#china-map .province.visited { fill: #ffd54d; }
+#china-map .province.visited:hover { fill: #ffc933; }
+#china-map .province.active {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+#china-map .map-border {
+  fill: none;
+  stroke: #b9c4d6;
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+.spot-panel {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.spot-panel h3 { margin: 0 0 12px; font-size: 18px; }
+.spot-panel img {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+.spot-empty {
+  padding: 36px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  background: var(--bg-soft);
+  border-radius: var(--radius);
+}
+@media (prefers-reduced-motion: reduce) {
+  #china-map .province { transition: none; }
+  #china-map .province:hover { transform: none; }
+}
+
 /* 作品视频 */
 .cover-video { margin: 36px 0; }
 .cover-video video {

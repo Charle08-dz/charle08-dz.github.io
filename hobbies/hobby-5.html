@@ -34,7 +34,14 @@
       <p class="lead">喜欢去没去过的地方走走,感受不同的城市和风景。</p>
     </div>
 
-    <div class="cover">旅行风景照(可替换为图片)</div>
+    <div class="china-map-wrap">
+      <p class="map-tip">黄色为去过的省份 · 鼠标悬停放大,点击省份查看旅行照片</p>
+      <svg id="china-map" role="img" aria-label="中国地图,标注我去过的省份"></svg>
+      <div class="spot-panel" id="spot-panel" hidden>
+        <h3 id="spot-name"></h3>
+        <div id="spot-body"></div>
+      </div>
+    </div>
 
     <div class="detail-body">
       <h2>我与旅行</h2>
@@ -57,6 +64,89 @@
   <footer>
     <div class="container">© 2026 查徐皓 · 保留所有权利</div>
   </footer>
+
+  <script src="../assets/media/china-provinces.js"></script>
+  <script>
+  (function () {
+    var VISITED = ['浙江省'];
+    var TRAVEL_PHOTOS = {};
+
+    var shortName = function (n) {
+      return n.replace(/(维吾尔自治区|壮族自治区|回族自治区|特别行政区|自治区|省|市)$/, '');
+    };
+    var visitedSet = {};
+    VISITED.forEach(function (p) { visitedSet[p] = true; });
+
+    var geo = window.CHINA_PROVINCES;
+    var features = geo.features.filter(function (f) { return f.geometry; });
+
+    var LAT0 = 36 * Math.PI / 180, KX = Math.cos(LAT0);
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    var px = function (c) { return [c[0] * KX, -c[1]]; };
+    features.forEach(function (f) {
+      var polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
+      polys.forEach(function (p) { p.forEach(function (ring) { ring.forEach(function (c) {
+        var q = px(c);
+        if (q[0] < minX) minX = q[0]; if (q[0] > maxX) maxX = q[0];
+        if (q[1] < minY) minY = q[1]; if (q[1] > maxY) maxY = q[1];
+      }); }); });
+    });
+    var W = 1000, pad = 12;
+    var s = (W - pad * 2) / (maxX - minX);
+    var H = (maxY - minY) * s + pad * 2;
+    var proj = function (c) { var q = px(c); return [(q[0] - minX) * s + pad, (q[1] - minY) * s + pad]; };
+
+    var svg = document.getElementById('china-map');
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('style', 'height:auto;max-height:70vh');
+    var NS = 'http://www.w3.org/2000/svg';
+
+    var panel = document.getElementById('spot-panel');
+    var spotName = document.getElementById('spot-name');
+    var spotBody = document.getElementById('spot-body');
+
+    function select(name) {
+      var sn = shortName(name);
+      spotName.textContent = sn + (visitedSet[name] ? ' · 去过的地方' : ' · 还没去过');
+      if (TRAVEL_PHOTOS[sn]) {
+        spotBody.innerHTML = '';
+        var img = document.createElement('img');
+        img.src = TRAVEL_PHOTOS[sn];
+        img.alt = sn + ' 的旅行照片';
+        spotBody.appendChild(img);
+      } else {
+        spotBody.innerHTML = '<div class="spot-empty">📷 ' + sn + ' 的照片待补充</div>';
+      }
+      panel.hidden = false;
+    }
+
+    features.forEach(function (f) {
+      var name = f.properties.name;
+      var isBorder = !name;
+      var d = '';
+      var polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
+      polys.forEach(function (p) { p.forEach(function (ring) {
+        d += 'M' + ring.map(function (c) { var q = proj(c); return q[0].toFixed(1) + ',' + q[1].toFixed(1); }).join('L') + 'Z';
+      }); });
+      var path = document.createElementNS(NS, 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('fill-rule', 'evenodd');
+      path.setAttribute('class', isBorder ? 'map-border' : (visitedSet[name] ? 'province visited' : 'province'));
+      if (!isBorder) {
+        var t = document.createElementNS(NS, 'title');
+        t.textContent = name + (visitedSet[name] ? '(去过)' : '');
+        path.appendChild(t);
+        path.addEventListener('click', function () {
+          var old = svg.querySelector('.province.active');
+          if (old) old.classList.remove('active');
+          path.classList.add('active');
+          select(name);
+        });
+      }
+      svg.appendChild(path);
+    });
+  })();
+  </script>
 
 </body>
 </html>
