@@ -1,13 +1,13 @@
 /* 项目详情页共享样式 */
 :root {
-  --bg: #0a0a0c;
-  --bg-soft: #101014;
-  --card: #16161b;
-  --text: #ece9e2;
-  --text-muted: #98938a;
-  --accent: #f5c542;
-  --accent-2: #d98f1e;
-  --border: #2b2a26;
+  --bg: #f7f9fc;
+  --bg-soft: #eef2f8;
+  --card: #ffffff;
+  --text: #2b3245;
+  --text-muted: #6b7385;
+  --accent: #4f7cff;
+  --accent-2: #38bdf8;
+  --border: #e3e8f0;
   --radius: 14px;
   --header-h: 64px;
 }
@@ -26,7 +26,7 @@ body {
 
 a { color: inherit; text-decoration: none; }
 
-::selection { background: rgba(245, 197, 66, 0.3); color: #fff; }
+::selection { background: rgba(79, 124, 255, 0.3); color: #fff; }
 
 /* 淡金色网格底纹 */
 body::before {
@@ -34,8 +34,8 @@ body::before {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(245, 197, 66, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 197, 66, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(79, 124, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 124, 255, 0.04) 1px, transparent 1px);
   background-size: 42px 42px;
   pointer-events: none;
   z-index: 0;
@@ -48,7 +48,7 @@ header {
   top: 0;
   z-index: 100;
   backdrop-filter: blur(12px);
-  background: rgba(10, 10, 12, 0.8);
+  background: rgba(247, 249, 252, 0.8);
   border-bottom: 1px solid var(--border);
 }
 .nav {
@@ -89,7 +89,7 @@ header {
   font-size: 12px;
   padding: 3px 10px;
   border-radius: 999px;
-  background: rgba(245, 197, 66, 0.15);
+  background: rgba(79, 124, 255, 0.15);
   color: var(--accent);
   margin-bottom: 14px;
 }
@@ -105,7 +105,7 @@ header {
   margin: 36px 0;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  background: linear-gradient(135deg, rgba(245, 197, 66, 0.18), rgba(217, 143, 30, 0.18));
+  background: linear-gradient(135deg, rgba(79, 124, 255, 0.18), rgba(56, 189, 248, 0.18));
   min-height: 280px;
   display: flex;
   align-items: center;
