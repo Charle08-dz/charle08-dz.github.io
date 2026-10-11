@@ -127,6 +127,7 @@ header {
   height: 320px;
   object-fit: cover;
 }
+.cover.has-img img.full { height: auto; }
 
 /* 动漫海报墙 */
 .poster-grid {
