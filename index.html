@@ -333,6 +333,24 @@
     .hobby-card h4 { margin-bottom: 8px; }
     .hobby-card p { color: var(--text-muted); font-size: 14px; }
 
+    /* ===== 身份 ===== */
+    .identity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .identity-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .identity-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .identity-card .icon { font-size: 28px; margin-bottom: 14px; }
+    .identity-card h4 { margin-bottom: 8px; }
+    .identity-card p { color: var(--text-muted); font-size: 14px; }
+
     /* ===== 项目 ===== */
     .projects-grid {
       display: grid;
@@ -480,8 +498,9 @@
       <a href="#home" data-spy="home" data-num="01"><span class="ico">🏠</span>首页</a>
       <a href="#about" data-spy="about" data-num="02"><span class="ico">🙋</span>关于</a>
       <a href="#hobbies" data-spy="hobbies" data-num="03"><span class="ico">🎈</span>爱好</a>
-      <a href="#projects" data-spy="projects" data-num="04"><span class="ico">📁</span>项目</a>
-      <a href="#contact" data-spy="contact" data-num="05"><span class="ico">✉️</span>联系</a>
+      <a href="#identity" data-spy="identity" data-num="04"><span class="ico">🪪</span>身份</a>
+      <a href="#projects" data-spy="projects" data-num="05"><span class="ico">📁</span>项目</a>
+      <a href="#contact" data-spy="contact" data-num="06"><span class="ico">✉️</span>联系</a>
     </nav>
     <div class="side-socials">
       <a href="https://github.com/charle08-dz" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">🐙</a>
@@ -562,6 +581,36 @@
             <div class="icon">✈️</div>
             <h4>旅游</h4>
             <p>喜欢去没去过的地方走走，感受不同的城市和风景。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 身份 -->
+    <section id="identity">
+      <div class="container">
+        <h2 class="section-title">我的身份</h2>
+        <p class="section-sub">我是谁，我在哪里，我在做什么</p>
+        <div class="identity-grid">
+          <div class="identity-card">
+            <div class="icon">🎓</div>
+            <h4>杭电学生</h4>
+            <p>杭州电子科技大学大一在读，认真过好大学的每一天。</p>
+          </div>
+          <div class="identity-card">
+            <div class="icon">🏛️</div>
+            <h4>都柏林学院学生会一员</h4>
+            <p>参与学生工作，服务同学，在协作中锻炼自己。</p>
+          </div>
+          <div class="identity-card">
+            <div class="icon">💻</div>
+            <h4>技术爱好者</h4>
+            <p>自学编程、搭建网站，喜欢一切可以动手折腾的技术。</p>
+          </div>
+          <div class="identity-card">
+            <div class="icon">🎬</div>
+            <h4>视频创作者</h4>
+            <p>剪辑与特效爱好者，把喜欢的东西做成作品。</p>
           </div>
         </div>
       </div>
@@ -650,7 +699,7 @@
       }
 
       // 滚动入场动画（渐进增强：无 JS 或减少动效时内容保持可见）
-      const revealEls = document.querySelectorAll('.hobby-card, .project-card, .about-card, .contact-card');
+      const revealEls = document.querySelectorAll('.hobby-card, .identity-card, .project-card, .about-card, .contact-card');
       if ('IntersectionObserver' in window && !reduceMotion) {
         revealEls.forEach(el => el.classList.add('reveal'));
         const revealObserver = new IntersectionObserver((entries) => {
