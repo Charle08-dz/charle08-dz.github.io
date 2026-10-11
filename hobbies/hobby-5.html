@@ -107,15 +107,19 @@
 
     function select(name) {
       var sn = shortName(name);
-      spotName.textContent = sn + (visitedSet[name] ? ' · 去过的地方' : ' · 还没去过');
-      if (TRAVEL_PHOTOS[sn]) {
+      if (!visitedSet[name]) {
+        spotName.textContent = sn;
+        spotBody.innerHTML = '<div class="spot-empty">🚫 区域尚未探索</div>';
+      } else if (TRAVEL_PHOTOS[sn]) {
+        spotName.textContent = sn;
         spotBody.innerHTML = '';
         var img = document.createElement('img');
         img.src = TRAVEL_PHOTOS[sn];
         img.alt = sn + ' 的旅行照片';
         spotBody.appendChild(img);
       } else {
-        spotBody.innerHTML = '<div class="spot-empty">📷 ' + sn + ' 的照片待补充</div>';
+        spotName.textContent = sn;
+        spotBody.innerHTML = '<div class="spot-empty">📷 哎呀,本人好像不太爱拍照</div>';
       }
       panel.hidden = false;
     }
