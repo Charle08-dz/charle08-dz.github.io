@@ -158,6 +158,10 @@ header {
   color: var(--text-muted);
   font-size: 13px;
 }
+.shot-grid img {
+  aspect-ratio: 16 / 9;
+  object-position: 50% 50%;
+}
 
 /* 作品视频 */
 .cover-video { margin: 36px 0; }
