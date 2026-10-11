@@ -114,6 +114,22 @@ header {
   font-size: 15px;
 }
 
+/* 作品视频 */
+.cover-video { margin: 36px 0; }
+.cover-video video {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: #000;
+}
+.cover-video figcaption {
+  margin-top: 10px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
 .detail-body { padding-bottom: 24px; }
 .detail-body h2 {
   font-size: 22px;
