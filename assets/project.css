@@ -129,6 +129,27 @@ header {
 }
 .cover.has-img img.full { height: auto; }
 
+/* 项目在线演示 iframe */
+.demo-frame {
+  display: block;
+  width: 100%;
+  height: 560px;
+  border: none;
+  background: #0e1330;
+}
+.btn-inline {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+.btn-inline:hover { transform: translateY(-2px); }
+
 /* 动漫海报墙 */
 .poster-grid {
   display: grid;
