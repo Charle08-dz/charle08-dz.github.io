@@ -36,10 +36,13 @@
 
     <div class="china-map-wrap">
       <p class="map-tip">黄色为去过的省份 · 鼠标悬停放大,点击省份查看旅行照片</p>
-      <svg id="china-map" role="img" aria-label="中国地图,标注我去过的省份"></svg>
-      <div class="spot-panel" id="spot-panel" hidden>
-        <h3 id="spot-name"></h3>
-        <div id="spot-body"></div>
+      <div class="map-stage">
+        <svg id="china-map" role="img" aria-label="中国地图,标注我去过的省份"></svg>
+        <div class="spot-panel" id="spot-panel" hidden>
+          <button class="spot-close" id="spot-close" aria-label="关闭">×</button>
+          <h3 id="spot-name"></h3>
+          <div id="spot-body"></div>
+        </div>
       </div>
     </div>
 
@@ -113,7 +116,21 @@
     var spotName = document.getElementById('spot-name');
     var spotBody = document.getElementById('spot-body');
 
-    function select(name) {
+    document.getElementById('spot-close').addEventListener('click', function (e) {
+      e.stopPropagation();
+      panel.hidden = true;
+      var old = svg.querySelector('.province.active');
+      if (old) old.classList.remove('active');
+    });
+    document.querySelector('.map-stage').addEventListener('click', function (e) {
+      if (e.target === svg) {
+        panel.hidden = true;
+        var old = svg.querySelector('.province.active');
+        if (old) old.classList.remove('active');
+      }
+    });
+
+    function showAt(path, name) {
       var sn = shortName(name);
       if (!visitedSet[name]) {
         spotName.textContent = sn;
@@ -133,6 +150,24 @@
         spotBody.innerHTML = '<div class="spot-empty">📷 哎呀,本人好像不太爱拍照</div>';
       }
       panel.hidden = false;
+      var b = path.getBBox();
+      var left = ((b.x + b.width / 2) / W) * 100;
+      var top = ((b.y + b.height / 2) / H) * 100;
+      left = Math.min(Math.max(left, 26), 74);
+      panel.style.left = left + '%';
+      panel.style.top = top + '%';
+      panel.classList.toggle('below', top < 45);
+      panel.style.marginLeft = '0px';
+      panel.style.marginTop = '0px';
+      var sr = panel.parentNode.getBoundingClientRect();
+      var pr = panel.getBoundingClientRect();
+      var dx = 0, dy = 0;
+      if (pr.left < sr.left + 4) dx = sr.left + 4 - pr.left;
+      else if (pr.right > sr.right - 4) dx = sr.right - 4 - pr.right;
+      if (pr.top < sr.top + 4) dy = sr.top + 4 - pr.top;
+      else if (pr.bottom > sr.bottom - 4) dy = sr.bottom - 4 - pr.bottom;
+      panel.style.marginLeft = dx + 'px';
+      panel.style.marginTop = dy + 'px';
     }
 
     features.forEach(function (f) {
@@ -155,7 +190,7 @@
           var old = svg.querySelector('.province.active');
           if (old) old.classList.remove('active');
           path.classList.add('active');
-          select(name);
+          showAt(path, name);
         });
       }
       svg.appendChild(path);

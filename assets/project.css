@@ -204,27 +204,45 @@ header {
   stroke-width: 1.8;
   stroke-dasharray: 4 3;
 }
+.map-stage { position: relative; }
 .spot-panel {
-  margin-top: 20px;
-  padding: 20px;
+  position: absolute;
+  transform: translate(-50%, -108%);
+  z-index: 10;
+  width: min(260px, 72%);
+  padding: 14px 16px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgba(43, 50, 69, 0.22);
 }
-.spot-panel h3 { margin: 0 0 12px; font-size: 18px; }
+.spot-panel.below { transform: translate(-50%, 8%); }
+.spot-panel h3 { margin: 0 0 10px; font-size: 15px; padding-right: 20px; }
+.spot-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.spot-close:hover { color: var(--text); }
 .spot-panel img {
   display: block;
   width: 100%;
-  max-height: 420px;
+  max-height: 200px;
   object-fit: cover;
   border-radius: var(--radius);
 }
-.spot-panel img + img { margin-top: 12px; }
+.spot-panel img + img { margin-top: 10px; }
 .spot-empty {
-  padding: 36px 0;
+  padding: 22px 0;
   text-align: center;
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: 13px;
   background: var(--bg-soft);
   border-radius: var(--radius);
 }
