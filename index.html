@@ -406,7 +406,7 @@
     /* ===== 身份 · 小人牵线 ===== */
     .identity-stage { position: relative; }
     .id-threads { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-    .id-threads path { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; opacity: 0.85; marker-end: url(#id-arrow); }
+    .id-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; opacity: 0.85; marker-end: url(#id-arrow); }
     .ids-grid {
       position: relative;
       z-index: 1;
@@ -708,7 +708,7 @@
                 <path d="M0 0 L10 5 L0 10 z" fill="#4f7cff" />
               </marker>
             </defs>
-            <path id="id-thread-path" d=""></path>
+            <g id="id-thread-group"></g>
           </svg>
           <div class="ids-grid">
             <div class="identity-card" style="--tilt:-2deg">
@@ -865,24 +865,22 @@
       window.addEventListener('load', drawThread);
       drawThread();
 
-      // 身份区:从小人胸口画箭头指向四张身份卡(仅桌面网格布局时)
+      // 身份区:从小人胸口画箭头指向四张身份卡,每根线独立一个 path 才能各自带箭头(仅桌面网格布局时)
       const idStage = document.querySelector('.identity-stage');
-      const idPath = document.getElementById('id-thread-path');
+      const idGroup = document.getElementById('id-thread-group');
+      const SVG_NS = 'http://www.w3.org/2000/svg';
       function drawIdThreads() {
-        if (!idStage || !idPath) return;
-        const svg = idPath.ownerSVGElement;
+        if (!idStage || !idGroup) return;
+        const svg = idGroup.ownerSVGElement;
         const sr = idStage.getBoundingClientRect();
         svg.setAttribute('viewBox', `0 0 ${sr.width} ${sr.height}`);
+        idGroup.textContent = '';
         const grid = idStage.querySelector('.ids-grid');
         const fig = idStage.querySelector('.id-figure');
-        if (getComputedStyle(grid).display !== 'grid' || !fig) {
-          idPath.setAttribute('d', '');
-          return;
-        }
+        if (getComputedStyle(grid).display !== 'grid' || !fig) return;
         const fr = fig.getBoundingClientRect();
         const cx = fr.left - sr.left + fr.width / 2;
         const cy = fr.top - sr.top + fr.height * 0.33;
-        let d = '';
         idStage.querySelectorAll('.identity-card').forEach(card => {
           const r = card.getBoundingClientRect();
           const left = r.left - sr.left, right = r.right - sr.left;
@@ -895,9 +893,11 @@
           const len = Math.hypot(dx, dy) || 1;
           ex += (dx / len) * 10;
           ey += (dy / len) * 10;
-          d += ` M ${cx} ${cy} Q ${(cx + ex) / 2} ${(cy + ey) / 2 + 18} ${ex} ${ey}`;
+          const p = document.createElementNS(SVG_NS, 'path');
+          p.setAttribute('class', 'id-line');
+          p.setAttribute('d', `M ${cx} ${cy} Q ${(cx + ex) / 2} ${(cy + ey) / 2 + 18} ${ex} ${ey}`);
+          idGroup.appendChild(p);
         });
-        idPath.setAttribute('d', d);
       }
       window.addEventListener('resize', drawIdThreads);
       window.addEventListener('load', drawIdThreads);
