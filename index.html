@@ -530,15 +530,19 @@
       border-radius: 16px 16px 50% 50% / 16px 16px 30% 30%;
       background: radial-gradient(circle at 50% 130%, #dbe4f2, #eef2f8 70%);
     }
+    .hole .slot { position: relative; }
     .hole .kun {
-      display: block;
-      width: 58%;
-      margin: 0 auto;
-      transform: translateY(118%);
+      position: absolute;
+      left: 50%;
+      bottom: -8%;
+      height: 108%;
+      width: auto;
+      transform: translate(-50%, 112%) rotate(-12deg);
       transition: transform 0.12s ease-out;
+      pointer-events: none;
     }
-    .hole.up .kun { transform: translateY(8%); }
-    .hole.gold .kun { filter: sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.12) drop-shadow(0 0 6px rgba(255, 190, 60, 0.8)); }
+    .hole.up:not(.sp) .kun.normal, .hole.up.sp .kun.minato { transform: translate(-50%, 0) rotate(-12deg); }
+    .hole.up.sp .kun { filter: drop-shadow(0 0 7px rgba(255, 186, 60, 0.8)); }
     .hole .lip {
       position: absolute;
       left: 14%;
@@ -945,16 +949,6 @@
         <h2 class="section-title">趣味小游戏</h2>
         <p class="section-sub">飞雷神苦无打地鼠 —— 手速够快，就能跟上隐藏木叶的天才</p>
         <div class="game-card">
-          <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-            <symbol id="sym-kunai" viewBox="0 0 100 140">
-              <path d="M50 4 L64 46 L50 38 L36 46 Z" fill="#9fb0c8" />
-              <path d="M50 4 L57 25 L50 21 Z" fill="#c8d4e6" />
-              <rect x="45" y="46" width="10" height="7" rx="2" fill="#6b7385" />
-              <rect x="46.5" y="53" width="7" height="50" rx="3.5" fill="#3d4660" />
-              <circle cx="50" cy="111" r="6" fill="none" stroke="#3d4660" stroke-width="4" />
-              <path d="M44 116 L50 134 L56 116 Z" fill="#d64550" />
-            </symbol>
-          </svg>
           <div class="game-hud" aria-hidden="false">
             <span>得分 <b id="g-score">0</b></span>
             <span>连击 <b id="g-combo">0</b></span>
@@ -962,20 +956,20 @@
             <span class="hud-rank"><span class="hud-badge" id="g-rank-badge"></span><b id="g-rank">见习·一阶</b></span>
           </div>
           <div class="game-board" id="game-board">
-            <button class="hole" aria-label="苦无洞 1"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
-            <button class="hole" aria-label="苦无洞 2"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
-            <button class="hole" aria-label="苦无洞 3"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
-            <button class="hole" aria-label="苦无洞 4"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
-            <button class="hole" aria-label="苦无洞 5"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
-            <button class="hole" aria-label="苦无洞 6"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
-            <button class="hole" aria-label="苦无洞 7"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
-            <button class="hole" aria-label="苦无洞 8"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
-            <button class="hole" aria-label="苦无洞 9"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 1"><span class="slot"><img class="kun normal" src="assets/media/kunai-normal.png" alt="" /><img class="kun minato" src="assets/media/kunai-minato.png" alt="" /></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 2"><span class="slot"><img class="kun normal" src="assets/media/kunai-normal.png" alt="" /><img class="kun minato" src="assets/media/kunai-minato.png" alt="" /></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 3"><span class="slot"><img class="kun normal" src="assets/media/kunai-normal.png" alt="" /><img class="kun minato" src="assets/media/kunai-minato.png" alt="" /></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 4"><span class="slot"><img class="kun normal" src="assets/media/kunai-normal.png" alt="" /><img class="kun minato" src="assets/media/kunai-minato.png" alt="" /></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 5"><span class="slot"><img class="kun normal" src="assets/media/kunai-normal.png" alt="" /><img class="kun minato" src="assets/media/kunai-minato.png" alt="" /></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 6"><span class="slot"><img class="kun normal" src="assets/media/kunai-normal.png" alt="" /><img class="kun minato" src="assets/media/kunai-minato.png" alt="" /></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 7"><span class="slot"><img class="kun normal" src="assets/media/kunai-normal.png" alt="" /><img class="kun minato" src="assets/media/kunai-minato.png" alt="" /></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 8"><span class="slot"><img class="kun normal" src="assets/media/kunai-normal.png" alt="" /><img class="kun minato" src="assets/media/kunai-minato.png" alt="" /></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 9"><span class="slot"><img class="kun normal" src="assets/media/kunai-normal.png" alt="" /><img class="kun minato" src="assets/media/kunai-minato.png" alt="" /></span><span class="lip"></span></button>
             <div class="game-fx" id="g-fx" aria-hidden="true">⚡ 飞雷神！</div>
             <div class="game-overlay" id="g-overlay">
               <div class="rank-badge" id="g-badge"></div>
               <h3 id="g-title">🍥 飞雷神苦无打地鼠</h3>
-              <p id="g-desc">30 秒内点击冒出来的苦无。每 100 分升一阶，段位从「见习」一路打到「超影」；金苦无 5 倍分，连击叠倍率。达到中忍解锁关于我的一段情报。</p>
+              <p id="g-desc">30 秒内点击冒出来的苦无。每 100 分升一阶，段位从「见习」一路打到「超影」；水门苦无 5 倍分，普通苦无 10 分，连击叠倍率。达到中忍解锁关于我的一段情报。</p>
               <button class="btn btn-primary" id="g-start">开始任务</button>
             </div>
           </div>
@@ -983,7 +977,7 @@
             <span class="ladder-label">段位表 · 每 100 分一阶</span>
             <div class="rank-list" id="g-ranks" aria-label="段位表"></div>
           </div>
-          <p class="game-tip">提示：每 100 分升一阶，三阶最高；苦无出现会越来越快，乱点会断连击——波风水门附体，稳住。</p>
+          <p class="game-tip">提示：带「忍兵冬兎」柄的是水门苦无，5 倍分；普通苦无 10 分。每 100 分升一阶，三阶最高，乱点会断连击。</p>
         </div>
       </div>
     </section>
@@ -1249,10 +1243,10 @@
           const free = holes.filter(h => !h.classList.contains('up'));
           if (free.length) {
             const h = free[Math.floor(Math.random() * free.length)];
-            h.classList.toggle('gold', Math.random() < 0.12);
+            h.classList.toggle('sp', Math.random() < 0.12);
             h.classList.add('up');
             const life = Math.max(540, 980 - elapsed() * 15);
-            h._t = setTimeout(() => h.classList.remove('up', 'gold'), life);
+            h._t = setTimeout(() => h.classList.remove('up', 'sp'), life);
           }
           spawnT = setTimeout(spawn, Math.max(400, 720 - elapsed() * 11));
         }
@@ -1260,7 +1254,7 @@
           running = false;
           clearInterval(countT);
           clearTimeout(spawnT);
-          holes.forEach(h => { clearTimeout(h._t); h.classList.remove('up', 'gold'); });
+          holes.forEach(h => { clearTimeout(h._t); h.classList.remove('up', 'sp'); });
           const r = rankOf(score);
           const top = r.idx === RANKS.length - 1 && r.tier === TIERS.length;
           const sync = Math.min(99, 20 + Math.round(score / 24));
@@ -1299,13 +1293,13 @@
           if (!running) return;
           if (h.classList.contains('up')) {
             clearTimeout(h._t);
-            const gold = h.classList.contains('gold');
-            h.classList.remove('up', 'gold');
+            const sp = h.classList.contains('sp');
+            h.classList.remove('up', 'sp');
             combo++;
             best = Math.max(best, combo);
             hits++;
             const mult = 1 + Math.min(4, Math.floor(combo / 5));
-            const gain = (gold ? 50 : 10) * mult;
+            const gain = (sp ? 50 : 10) * mult;
             score += gain;
             floatPts(h, '+' + gain);
             if (combo > 0 && combo % 5 === 0) showFx();
