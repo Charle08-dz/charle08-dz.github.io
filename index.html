@@ -489,6 +489,137 @@
     /* 拉伸链接:点击卡片任意位置都跳转详情页 */
     .project-card .link::after { content: ""; position: absolute; inset: 0; }
 
+    /* ===== 趣味小游戏 · 飞雷神苦无打地鼠 ===== */
+    .game-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+    }
+    .game-hud {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-bottom: 18px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+    .game-hud b { color: var(--accent); font-size: 18px; font-variant-numeric: tabular-nums; }
+    .game-board {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .hole {
+      position: relative;
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .hole .slot {
+      display: block;
+      overflow: hidden;
+      height: clamp(78px, 26vw, 104px);
+      border: 1px solid var(--border);
+      border-radius: 16px 16px 50% 50% / 16px 16px 30% 30%;
+      background: radial-gradient(circle at 50% 130%, #dbe4f2, #eef2f8 70%);
+    }
+    .hole .kun {
+      display: block;
+      width: 58%;
+      margin: 0 auto;
+      transform: translateY(118%);
+      transition: transform 0.12s ease-out;
+    }
+    .hole.up .kun { transform: translateY(8%); }
+    .hole.gold .kun { filter: sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.12) drop-shadow(0 0 6px rgba(255, 190, 60, 0.8)); }
+    .hole .lip {
+      position: absolute;
+      left: 14%;
+      right: 14%;
+      bottom: 1px;
+      height: 13px;
+      border-radius: 50%;
+      background: rgba(90, 110, 150, 0.18);
+      filter: blur(2px);
+      pointer-events: none;
+    }
+    .hole:active .slot { background: radial-gradient(circle at 50% 130%, #cdd9ee, #e6ecf7 70%); }
+    .pts {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+      pointer-events: none;
+      animation: rise 0.6s ease-out forwards;
+    }
+    .pts.miss { color: var(--text-muted); font-weight: 500; }
+    @keyframes rise {
+      from { opacity: 1; transform: translate(-50%, 0); }
+      to { opacity: 0; transform: translate(-50%, -34px); }
+    }
+    .game-fx {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      color: var(--accent);
+      text-shadow: 0 0 18px rgba(79, 124, 255, 0.65);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 4;
+    }
+    .game-fx.show { animation: fxpop 0.9s ease-out; }
+    @keyframes fxpop {
+      0% { opacity: 0; transform: scale(0.4); }
+      25% { opacity: 1; transform: scale(1.15); }
+      70% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.05); }
+    }
+    .game-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 18px;
+      text-align: center;
+      border-radius: 16px;
+      background: rgba(247, 249, 252, 0.94);
+      backdrop-filter: blur(3px);
+    }
+    .game-overlay.hidden { display: none; }
+    .game-overlay h3 { font-size: 20px; }
+    .game-overlay p { color: var(--text-muted); font-size: 14px; max-width: 340px; }
+    .game-overlay .rank { font-size: 26px; font-weight: 800; color: var(--accent); }
+    .game-tip {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 16px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hole .kun { transition: none; }
+      .pts { animation-duration: 0.01s; }
+      .game-fx.show { animation: none; opacity: 1; }
+    }
+
     /* ===== 联系 ===== */
     .contact-card {
       background: var(--card);
@@ -596,7 +727,8 @@
       <a href="#hobbies" data-spy="hobbies" data-num="03"><span class="ico">🎈</span>爱好</a>
       <a href="#identity" data-spy="identity" data-num="04"><span class="ico">🪪</span>身份</a>
       <a href="#projects" data-spy="projects" data-num="05"><span class="ico">📁</span>项目</a>
-      <a href="#contact" data-spy="contact" data-num="06"><span class="ico">✉️</span>联系</a>
+      <a href="#games" data-spy="games" data-num="06"><span class="ico">🎯</span>小游戏</a>
+      <a href="#contact" data-spy="contact" data-num="07"><span class="ico">✉️</span>联系</a>
     </nav>
     <div class="side-socials">
       <a href="https://github.com/charle08-dz" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">🐙</a>
@@ -767,6 +899,49 @@
       </div>
     </section>
 
+    <!-- 趣味小游戏 -->
+    <section id="games">
+      <div class="container">
+        <h2 class="section-title">趣味小游戏</h2>
+        <p class="section-sub">飞雷神苦无打地鼠 —— 手速够快，就能跟上隐藏木叶的天才</p>
+        <div class="game-card">
+          <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+            <symbol id="sym-kunai" viewBox="0 0 100 140">
+              <path d="M50 4 L64 46 L50 38 L36 46 Z" fill="#9fb0c8" />
+              <path d="M50 4 L57 25 L50 21 Z" fill="#c8d4e6" />
+              <rect x="45" y="46" width="10" height="7" rx="2" fill="#6b7385" />
+              <rect x="46.5" y="53" width="7" height="50" rx="3.5" fill="#3d4660" />
+              <circle cx="50" cy="111" r="6" fill="none" stroke="#3d4660" stroke-width="4" />
+              <path d="M44 116 L50 134 L56 116 Z" fill="#d64550" />
+            </symbol>
+          </svg>
+          <div class="game-hud" aria-hidden="false">
+            <span>得分 <b id="g-score">0</b></span>
+            <span>连击 <b id="g-combo">0</b></span>
+            <span>剩余 <b id="g-time">30</b>s</span>
+          </div>
+          <div class="game-board" id="game-board">
+            <button class="hole" aria-label="苦无洞 1"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 2"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 3"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 4"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 5"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 6"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 7"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 8"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
+            <button class="hole" aria-label="苦无洞 9"><span class="slot"><svg class="kun" viewBox="0 0 100 140"><use href="#sym-kunai" /></svg></span><span class="lip"></span></button>
+            <div class="game-fx" id="g-fx" aria-hidden="true">⚡ 飞雷神！</div>
+            <div class="game-overlay" id="g-overlay">
+              <h3 id="g-title">🍥 飞雷神苦无打地鼠</h3>
+              <p id="g-desc">30 秒内点击冒出来的苦无，连击越高倍率越高，金苦无 5 倍分。达成高分解锁关于我的一段情报。</p>
+              <button class="btn btn-primary" id="g-start">开始任务</button>
+            </div>
+          </div>
+          <p class="game-tip">提示：苦无出现会越来越快；乱点会断连击——波风水鸣附体，稳住。</p>
+        </div>
+      </div>
+    </section>
+
     <!-- 联系 -->
     <section id="contact">
       <div class="container">
@@ -918,6 +1093,115 @@
       window.addEventListener('resize', drawIdThreads);
       window.addEventListener('load', drawIdThreads);
       drawIdThreads();
+
+      // 飞雷神苦无打地鼠
+      (function () {
+        const board = document.getElementById('game-board');
+        if (!board) return;
+        const holes = [...board.querySelectorAll('.hole')];
+        const scoreEl = document.getElementById('g-score');
+        const comboEl = document.getElementById('g-combo');
+        const timeEl = document.getElementById('g-time');
+        const fxEl = document.getElementById('g-fx');
+        const overlay = document.getElementById('g-overlay');
+        const titleEl = document.getElementById('g-title');
+        const descEl = document.getElementById('g-desc');
+        const startBtn = document.getElementById('g-start');
+        const initTitle = titleEl.textContent;
+        const initDesc = descEl.textContent;
+        const DURATION = 30;
+        let score = 0, combo = 0, best = 0, hits = 0, misses = 0, left = DURATION;
+        let running = false, countT = null, spawnT = null;
+
+        function setHud() {
+          scoreEl.textContent = score;
+          comboEl.textContent = combo;
+          timeEl.textContent = left;
+        }
+        function floatPts(hole, text, miss) {
+          const s = document.createElement('span');
+          s.className = 'pts' + (miss ? ' miss' : '');
+          s.textContent = text;
+          hole.appendChild(s);
+          setTimeout(() => s.remove(), 650);
+        }
+        function showFx() {
+          fxEl.classList.remove('show');
+          void fxEl.offsetWidth;
+          fxEl.classList.add('show');
+        }
+        function elapsed() { return DURATION - left; }
+        function spawn() {
+          if (!running) return;
+          const free = holes.filter(h => !h.classList.contains('up'));
+          if (free.length) {
+            const h = free[Math.floor(Math.random() * free.length)];
+            h.classList.toggle('gold', Math.random() < 0.12);
+            h.classList.add('up');
+            const life = Math.max(540, 980 - elapsed() * 15);
+            h._t = setTimeout(() => h.classList.remove('up', 'gold'), life);
+          }
+          spawnT = setTimeout(spawn, Math.max(400, 720 - elapsed() * 11));
+        }
+        function end() {
+          running = false;
+          clearInterval(countT);
+          clearTimeout(spawnT);
+          holes.forEach(h => { clearTimeout(h._t); h.classList.remove('up', 'gold'); });
+          const rank = score >= 600 ? '🔥 火影级 · 波风水鸣本人？'
+            : score >= 400 ? '🟣 上忍'
+            : score >= 220 ? '🌀 中忍'
+            : score >= 90 ? '🍥 下忍'
+            : '🐸  Academy 见习';
+          const sync = Math.min(99, 25 + Math.round(score / 6));
+          titleEl.textContent = rank;
+          descEl.innerHTML = `得分 <b>${score}</b> · 最高连击 <b>${best}</b> · 命中 <b>${hits}</b> 次（空拍 ${misses}）<br>`
+            + `你和这个网站的默契度 <b style="color:var(--accent)">${sync}%</b><br><br>`
+            + (score >= 220
+              ? '🎉 达成「中忍」，解锁隐藏情报：我是查徐皓，一个火影老粉 + 铅球运动员 + 走过 17 个省份的杭电 AI 新生。手速这么快，来找我组队吧。'
+              : '💡 彩蛋预告：达到「中忍」段位可解锁我的一段隐藏自我介绍，再来一次？');
+          startBtn.textContent = '再来一局';
+          overlay.classList.remove('hidden');
+          setHud();
+        }
+        function start() {
+          score = 0; combo = 0; best = 0; hits = 0; misses = 0; left = DURATION;
+          running = true;
+          titleEl.textContent = initTitle;
+          descEl.textContent = initDesc;
+          startBtn.textContent = '开始任务';
+          overlay.classList.add('hidden');
+          setHud();
+          countT = setInterval(() => {
+            left--;
+            setHud();
+            if (left <= 0) end();
+          }, 1000);
+          spawn();
+        }
+        holes.forEach(h => h.addEventListener('click', () => {
+          if (!running) return;
+          if (h.classList.contains('up')) {
+            clearTimeout(h._t);
+            const gold = h.classList.contains('gold');
+            h.classList.remove('up', 'gold');
+            combo++;
+            best = Math.max(best, combo);
+            hits++;
+            const mult = 1 + Math.min(4, Math.floor(combo / 5));
+            const gain = (gold ? 50 : 10) * mult;
+            score += gain;
+            floatPts(h, '+' + gain);
+            if (combo > 0 && combo % 5 === 0) showFx();
+          } else {
+            combo = 0;
+            misses++;
+            floatPts(h, '空拍', true);
+          }
+          setHud();
+        }));
+        startBtn.addEventListener('click', start);
+      })();
 
       // 移动端抽屉边栏
       const sidebar = document.getElementById('sidebar');
