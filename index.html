@@ -445,20 +445,13 @@
     }
     .identity-card:nth-child(1) .knot, .identity-card:nth-child(3) .knot { right: 18px; }
     .identity-card:nth-child(2) .knot, .identity-card:nth-child(4) .knot { left: 18px; }
-    .id-figure { grid-column: 2; grid-row: 1 / 3; justify-self: center; width: 170px; z-index: 2; }
-    .fig-head {
-      position: relative;
-      z-index: 1;
-      width: 58px;
-      height: 58px;
-      margin: 0 auto;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 3px solid #fff;
-      box-shadow: 0 4px 10px rgba(43, 50, 69, 0.25);
+    .id-figure { grid-column: 2; grid-row: 1 / 3; justify-self: center; z-index: 2; }
+    .fig-img {
+      display: block;
+      width: 150px;
+      border-radius: 14px;
+      box-shadow: 0 10px 24px rgba(60, 80, 120, 0.2);
     }
-    .fig-head img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
-    .fig-svg { display: block; width: 160px; height: 112px; margin: -16px auto 0; }
 
     @media (max-width: 960px) {
       .ids-grid { display: flex; flex-direction: column; gap: 26px; }
@@ -748,21 +741,8 @@
               <h4>视频创作者</h4>
               <p>剪辑与特效爱好者，把喜欢的东西做成作品。</p>
             </div>
-            <div class="id-figure" aria-hidden="true">
-              <div class="fig-head"><img src="assets/media/hero-photo.jpg" alt=""></div>
-              <svg class="fig-svg" viewBox="0 0 160 112">
-                <defs>
-                  <linearGradient id="fig-hg" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#4f7cff" /><stop offset="1" stop-color="#38bdf8" />
-                  </linearGradient>
-                </defs>
-                <path d="M56 30 Q30 36 16 22" stroke="#4f7cff" stroke-width="13" stroke-linecap="round" fill="none" />
-                <path d="M104 30 Q130 36 144 22" stroke="#4f7cff" stroke-width="13" stroke-linecap="round" fill="none" />
-                <path d="M56 16 Q80 6 104 16 L112 74 Q80 84 48 74 Z" fill="url(#fig-hg)" />
-                <path d="M74 32 v9 M86 32 v9" stroke="#fff" stroke-width="2.4" stroke-linecap="round" />
-                <rect x="63" y="80" width="12" height="26" rx="6" fill="#2b3245" />
-                <rect x="85" y="80" width="12" height="26" rx="6" fill="#2b3245" />
-              </svg>
+            <div class="id-figure">
+              <img class="fig-img" src="assets/media/q-figure.jpg" alt="查徐皓的Q版形象">
             </div>
           </div>
         </div>
@@ -911,7 +891,7 @@
         }
         const fr = fig.getBoundingClientRect();
         const cx = fr.left - sr.left + fr.width / 2;
-        const cy = fr.top - sr.top + 92;
+        const cy = fr.top - sr.top + fr.height * 0.33;
         let d = '';
         idStage.querySelectorAll('.identity-card .knot').forEach(k => {
           const r = k.getBoundingClientRect();
