@@ -618,11 +618,15 @@
       margin-top: 16px;
     }
     .hud-rank { display: inline-flex; align-items: center; gap: 7px; }
-    .hud-badge { display: inline-flex; width: 30px; height: 30px; }
-    .hud-badge svg { width: 100%; height: 100%; display: block; }
-    .rank-badge { display: none; width: 62px; height: 62px; }
-    .rank-badge.show { display: block; animation: badgePop .5s cubic-bezier(.2, 1.4, .4, 1); }
-    .rank-badge svg { width: 100%; height: 100%; display: block; }
+    .hud-badge { display: inline-flex; width: 32px; height: 32px; }
+    .rk-img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .hud-badge svg, .hud-badge .rk-img { width: 32px; height: 32px; }
+    .rank-badge { display: none; flex-direction: column; align-items: center; gap: 5px; }
+    .rank-badge svg, .rank-badge .rk-img { width: 62px; height: 62px; }
+    .rank-badge.show { display: flex; animation: badgePop .5s cubic-bezier(.2, 1.4, .4, 1); }
+    .pips { display: flex; gap: 5px; }
+    .pips i { width: 7px; height: 7px; transform: rotate(45deg); background: rgba(43, 50, 69, .16); border-radius: 1px; }
+    .pips i.on { background: var(--accent); }
     @keyframes badgePop {
       from { transform: scale(.35) rotate(-14deg); opacity: 0; }
       to { transform: none; opacity: 1; }
@@ -641,7 +645,7 @@
       background: var(--bg-soft);
       transition: border-color .2s, box-shadow .2s;
     }
-    .rank-item svg { width: 34px; height: 34px; display: block; }
+    .rank-item svg, .rank-item .rk-img { width: 36px; height: 36px; }
     .rank-item em { font-style: normal; font-size: 11px; color: var(--text-muted); }
     .rank-item.cur { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(79, 124, 255, .16); }
     .rank-item.cur em { color: var(--accent); font-weight: 700; }
@@ -1161,12 +1165,12 @@
         const RANKS = [
           { name: '见习', emoji: '🐸', c1: '#d3dbe8', c2: '#8b98b0', ink: '#39414f' },
           { name: '新生', emoji: '🍥', c1: '#adf2ca', c2: '#2fae72', ink: '#0f4a30' },
-          { name: '下忍', emoji: '🌀', c1: '#aedaff', c2: '#3a82e0', ink: '#123a6b' },
-          { name: '中忍', emoji: '🟣', c1: '#d3c4ff', c2: '#7c51e0', ink: '#2c1a63' },
-          { name: '上忍', emoji: '🟠', c1: '#ffcca4', c2: '#ee7a1f', ink: '#5c2c05' },
-          { name: '暗部', emoji: '🌑', c1: '#96a0b8', c2: '#242a3d', ink: '#eef1f8' },
-          { name: '影', emoji: '🟡', c1: '#ffe9a2', c2: '#e8a615', ink: '#4d3200' },
-          { name: '超影', emoji: '🔥', c1: '#ffd0ac', c2: '#dc3228', ink: '#4a0a06' }
+          { name: '下忍', emoji: '🥽', img: 'assets/media/ranks/rank-xiaren.png' },
+          { name: '中忍', emoji: '🎽', img: 'assets/media/ranks/rank-zhongren.png' },
+          { name: '上忍', emoji: '🎒', img: 'assets/media/ranks/rank-shangren.png' },
+          { name: '暗部', emoji: '🎭', img: 'assets/media/ranks/rank-anbu.png' },
+          { name: '影', emoji: '👒', img: 'assets/media/ranks/rank-ying.png' },
+          { name: '超影', emoji: '🌀', img: 'assets/media/ranks/rank-chaoying.png' }
         ];
         const TIERS = ['一', '二', '三'];
         const PER_TIER = 100;
@@ -1180,35 +1184,33 @@
         function rankLabel(r) {
           return RANKS[r.idx].name + '·' + TIERS[r.tier - 1] + '阶';
         }
-        // 木叶徽章：盾形 + 螺旋纹 + 段位名 + 三阶菱形刻度
-        function badge(r, uid, withPips) {
+        // 见习/新生在游戏里没有专属图标，用盾形徽章代替
+        function crestSVG(r, uid) {
           const rk = RANKS[r.idx];
           const gid = 'rgb-' + uid;
-          let pips = '';
-          if (withPips) {
-            for (let i = 0; i < TIERS.length; i++) {
-              const on = i < r.tier;
-              pips += '<path d="M' + (38 + i * 10) + ' 66 l4.6 5.4 l-4.6 5.4 l-4.6 -5.4 z" fill="'
-                + (on ? '#fff' : 'rgba(255,255,255,.28)') + '" stroke="rgba(0,0,0,.22)" stroke-width=".7" />';
-            }
-          }
-          const star = r.idx >= 6
-            ? '<path d="M18 16 l1.7 3.6 L24 20.4 l-2.3 2.9 l2.3 2.9 l-4.3 -.8 L18 30 l-1.7 -3.6 l-4.3 .8 l2.3 -2.9 L12 20.4 l4.3 -.8 z" fill="#fff" opacity=".9" />'
-            + '<path d="M78 16 l1.7 3.6 L84 20.4 l-2.3 2.9 l2.3 2.9 l-4.3 -.8 L78 30 l-1.7 -3.6 l-4.3 .8 l2.3 -2.9 L72 20.4 l4.3 -.8 z" fill="#fff" opacity=".9" />'
-            : '';
           return '<svg viewBox="0 0 96 92" aria-hidden="true" focusable="false">'
             + '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1">'
             + '<stop offset="0" stop-color="' + rk.c1 + '" /><stop offset="1" stop-color="' + rk.c2 + '" /></linearGradient></defs>'
             + '<path d="M48 3 L86 20 V52 C86 70 48 89 48 89 C48 89 10 70 10 52 V20 Z" fill="url(#' + gid + ')" stroke="rgba(0,0,0,.24)" stroke-width="2" />'
             + '<path d="M48 11 L79 24 V51 C79 65 48 80 48 80 C48 80 17 65 17 51 V24 Z" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.6" />'
             + '<path d="M48 19 a8.5 8.5 0 1 1 -8 11" fill="none" stroke="' + rk.ink + '" stroke-opacity=".5" stroke-width="3" stroke-linecap="round" />'
-            + '<text x="48" y="56" text-anchor="middle" font-size="17" font-weight="800" fill="' + rk.ink + '">' + rk.name + '</text>'
-            + pips + star + '</svg>';
+            + '<text x="48" y="58" text-anchor="middle" font-size="17" font-weight="800" fill="' + rk.ink + '">' + rk.name + '</text>'
+            + '</svg>';
+        }
+        function badgeHTML(r, uid, withPips) {
+          const rk = RANKS[r.idx];
+          const art = rk.img
+            ? '<img class="rk-img" src="' + rk.img + '" alt="' + rk.name + '段位图标" />'
+            : crestSVG(r, uid);
+          const pips = withPips
+            ? '<span class="pips">' + [0, 1, 2].map(i => '<i' + (i < r.tier ? ' class="on"' : '') + '></i>').join('') + '</span>'
+            : '';
+          return art + pips;
         }
         function renderLadder(r) {
           if (!ranksEl) return;
           ranksEl.innerHTML = RANKS.map((rk, i) =>
-            '<div class="rank-item' + (i === r.idx ? ' cur' : '') + '">' + badge({ idx: i, tier: 0 }, 'l' + i, false)
+            '<div class="rank-item' + (i === r.idx ? ' cur' : '') + '">' + badgeHTML({ idx: i, tier: 0 }, 'l' + i, false)
             + '<em>' + rk.name + '</em></div>').join('');
         }
         function syncRank() {
@@ -1217,7 +1219,7 @@
           if (key === rankKey) return;
           rankKey = key;
           rankEl.textContent = rankLabel(r);
-          hudBadgeEl.innerHTML = badge(r, 'hud', true);
+          hudBadgeEl.innerHTML = badgeHTML(r, 'hud', false);
           renderLadder(r);
         }
         let score = 0, combo = 0, best = 0, hits = 0, misses = 0, left = DURATION;
@@ -1264,7 +1266,7 @@
           const sync = Math.min(99, 20 + Math.round(score / 24));
           titleEl.textContent = RANKS[r.idx].emoji + ' ' + rankLabel(r)
             + (top ? ' · 木叶之巅，无人在上' : r.idx >= 6 ? ' · 已经能进火影楼了' : r.idx >= 4 ? ' · 带小队没问题' : ' · 还在修行中');
-          badgeEl.innerHTML = badge(r, 'live', true);
+          badgeEl.innerHTML = badgeHTML(r, 'live', true);
           badgeEl.classList.add('show');
           descEl.innerHTML = `得分 <b>${score}</b> · 最高连击 <b>${best}</b> · 命中 <b>${hits}</b> 次（空拍 ${misses}）<br>`
             + `你和这个网站的默契度 <b style="color:var(--accent)">${sync}%</b><br><br>`
